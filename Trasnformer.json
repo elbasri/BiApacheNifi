@@ -1,0 +1,31 @@
+[
+  {
+    "operation": "shift",
+    "spec": {
+      "*": {
+        "name": "[&1].name",
+        "price": "[&1].price",
+        "id": "[&1].id",
+        "store_name": "[&1].store_name",
+        "store_price": "[&1].store_price",
+        "store_updated_date": "[&1].store_updated_date"
+      }
+    }
+  },
+  {
+    "operation": "modify-overwrite-beta",
+    "spec": {
+      "*": {
+        "final_price": "=if(isPresent(@(1,store_updated_date)),=if(isDateAfter(@(1,store_updated_date),@(1,_timestamp)),@(1,store_price),@(1,price)),@(1,price))"
+      }
+    }
+  },
+  {
+    "operation": "modify-overwrite-beta",
+    "spec": {
+      "*": {
+        "final_price": "=toInteger(@(1,final_price))"
+      }
+    }
+  }
+]
